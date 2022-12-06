@@ -1,7 +1,0 @@
-encryptionsalt: v1:KL4W8vk/z/4=:v1:VBkmHO9/F43PK0h1:t9OZxFUib3C5w5tg8MHBxpxdbUCdPg==
-name: sandbox
-description: A minimal JavaScript Pulumi program.
-runtime:
-    name: nodejs
-    options:
-        typescript: true
