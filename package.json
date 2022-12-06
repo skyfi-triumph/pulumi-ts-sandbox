@@ -1,0 +1,21 @@
+{
+    "name": "aws-sandbox",
+    "devDependencies": {
+        "@types/node": "^10.0.0",
+        "@typescript-eslint/eslint-plugin": "^4.31.2",
+        "@typescript-eslint/parser": "^4.31.2",
+        "eslint": "^7.32.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "prettier": "^2.4.1",
+        "typescript": "^4.7.3"
+    },
+    "dependencies": {
+        "@pulumi/aws": "^5.13.0",
+        "@pulumi/pulumi": "^3.0.0",
+        "@pulumi/aws-native": "^0.8.0",
+        "global": "^4.4.0",
+        "yaml": "^1.10.2"
+    },
+    "version": "0.0.0"
+}

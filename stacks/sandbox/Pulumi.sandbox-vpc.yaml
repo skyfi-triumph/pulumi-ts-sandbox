@@ -1,0 +1,47 @@
+encryptionsalt: v1:itJsl9JCy1I=:v1:ajExxvENfHnbsAvV:D2rLCotVtzKi3D6r17l+7b27Ovtd4w==
+config:
+  stack:data:
+    vpcs:
+    - createNatGateway: true
+      createRouteTables: true
+      data:
+        cidrBlock: 10.200.0.0/16
+        enableDnsHostnames: true
+        enableDnsSupport: true
+      name: sandbox
+      region: us-east-1
+      subnets:
+      - availabilityZone: us-east-1a
+        cidrBlock: 10.200.0.0/19
+        tags:
+          type: private
+        type: private
+      - availabilityZone: us-east-1b
+        cidrBlock: 10.200.32.0/19
+        tags:
+          type: private
+        type: private
+      - availabilityZone: us-east-1c
+        cidrBlock: 10.200.64.0/19
+        tags:
+          type: private
+        type: private
+      - availabilityZone: us-east-1a
+        cidrBlock: 10.200.96.0/19
+        tags:
+          type: public
+        type: public
+      - availabilityZone: us-east-1b
+        cidrBlock: 10.200.128.0/19
+        tags:
+          type: public
+        type: public
+      - availabilityZone: us-east-1c
+        cidrBlock: 10.200.160.0/19
+        tags:
+          type: public
+        type: public
+  stack:providers:
+    aws:
+    - name: aws-us-east-1-provider
+      region: us-east-1
