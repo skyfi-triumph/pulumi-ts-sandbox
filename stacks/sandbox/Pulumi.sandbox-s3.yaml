@@ -1,0 +1,108 @@
+encryptionsalt: v1:itJsl9JCy1I=:v1:ajExxvENfHnbsAvV:D2rLCotVtzKi3D6r17l+7b27Ovtd4w==
+config:
+  stack:data:
+    private:
+      flow-logs:
+        logBucket: dev-s3-logging
+        logPrefix: /<organization>-dev-flow-logs
+        name: <organization>-dev-flow-logs
+        region: us-east-1
+        tags:
+          domain: infra
+          environment: dev
+          map-migrated: d-server-XXXXXXXXXX
+      <organization>-dev-redshift:
+        logBucket: dev-s3-logging
+        logPrefix: /dev-redshift
+        name: <organization>-dev-redshift
+        region: us-east-1
+        tags:
+          domain: data
+          environment: dev
+          map-migrated: d-server-XXXXXXXXXX
+          service: machine-learning
+      dev-attachments:
+        logBucket: dev-s3-logging
+        logPrefix: /dev-attachments
+        name: dev-attachments
+        policy:
+          statements:
+          - actions:
+            - s3:ReplicateDelete
+            - s3:ReplicateObject
+            - s3:ReplicateTags
+            - s3:GetObject
+            - s3:GetObjectVersion
+            - s3:PutObject
+            effect: Allow
+            principals:
+            - identifiers:
+              - arn:aws:iam::165210955564:role/dev-s3-migration
+              type: AWS
+            resources:
+            - arn:aws:s3:::dev-attachments/*
+          - actions:
+            - s3:List*
+            - s3:GetBucketVersioning
+            - s3:PutBucketVersioning
+            effect: Allow
+            principals:
+            - identifiers:
+              - arn:aws:iam::165210955564:role/dev-s3-migration
+              type: AWS
+            resources:
+            - arn:aws:s3:::dev-attachments
+        region: us-east-1
+        tags:
+          domain: back-end
+          environment: dev
+          map-migrated: d-server-XXXXXXXXXX
+          service: rails-api
+        versioning:
+          enabled: true
+      dev-csv:
+        logBucket: dev-s3-logging
+        logPrefix: /dev-csv
+        name: dev-csv
+        region: us-east-1
+        tags:
+          domain: integration
+          environment: dev
+          map-migrated: d-server-XXXXXXXXXX
+          service: csv
+      dev-github:
+        logBucket: dev-s3-logging
+        logPrefix: /dev-github
+        name: dev-github
+        region: us-east-1
+        tags:
+          domain: integration
+          environment: dev
+          map-migrated: d-server-XXXXXXXXXX
+          service: github
+      dev-ml-data-imports:
+        logBucket: dev-s3-logging
+        logPrefix: /dev-ml-data-imports
+        name: <organization>-dev-ml-data-imports
+        region: us-east-1
+        tags:
+          domain: machine-learning
+          environment: dev
+          map-migrated: d-server-XXXXXXXXXX
+          service: data
+      dev-s3-logging:
+        logBucket: dev-s3-logging
+        logPrefix: /dev-s3-logging
+        name: dev-s3-logging
+        region: us-east-1
+        tags:
+          domain: infra
+          environment: dev
+          map-migrated: d-server-XXXXXXXXXX
+  stack:providers:
+    aws:
+    - defaultTags:
+        tags:
+          environment: sandbox
+      name: aws-us-east-1-provider
+      region: us-east-1

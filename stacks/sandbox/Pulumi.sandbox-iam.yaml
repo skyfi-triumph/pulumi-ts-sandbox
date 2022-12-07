@@ -1,0 +1,325 @@
+encryptionsalt: v1:itJsl9JCy1I=:v1:ajExxvENfHnbsAvV:D2rLCotVtzKi3D6r17l+7b27Ovtd4w==
+config:
+  stack:data:
+    instanceprofile:
+    - name: KarpenterInstanceProfile
+      role: KarpenterInstanceNodeRole-role
+    roles:
+    - arns:
+      - arn:aws:iam::aws:policy/AmazonRDSReadOnlyAccess
+      assumeRoleArns:
+      - arn:aws:iam::<account#>:user/jonathan
+      - arn:aws:iam::<account#>:user/zahra
+      - arn:aws:iam::<account#>:user/skyler
+      inlinePolicies:
+        name: dev-lead
+        policy:
+          statements:
+          - actions:
+            - eks:*
+            effect: Allow
+            resources:
+            - '*'
+          - actions:
+            - s3:ListBucket
+            effect: Allow
+            resources:
+            - '*'
+          - actions:
+            - s3:*
+            effect: Allow
+            resources:
+            - arn:aws:s3:::<company>-dev-infra
+            - arn:aws:s3:::<company>app-dev-infra/*
+          - actions:
+            - kms:*
+            effect: Allow
+            resources:
+            - arn:aws:kms:us-east-1:<2ndAccount#>:key/14749b8b-fcde-4161-a74f-dcb5b587f895
+            - arn:aws:kms:us-east-1:<2ndAccount#>:alias/pulumi
+      name: dev-dev-lead
+    - arns:
+      - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+      - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+      - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+      - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      assumeRoleService:
+      - ec2.amazonaws.com
+      name: KarpenterInstanceNodeRole
+    - arns:
+      - arn:aws:iam::aws:policy/PowerUserAccess
+      - arn:aws:iam::aws:policy/AWSBillingReadOnlyAccess
+      assumeRoleArns:
+      - arn:aws:iam::<account#>:user/jonathan
+      - arn:aws:iam::<account#>:user/zahra
+      - arn:aws:iam::<account#>:user/skyler
+      - arn:aws:iam::<2ndAccount#>:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_TriumphTechDev_936e89a323029884
+      inlinePolicies:
+        name: dev-tt
+        policy:
+          statements:
+          - actions:
+            - iam:GetRole
+            - iam:GetRolePolicy
+            - iam:ListAttachedRolePolicies
+            - iam:ListInstanceProfilesForRole
+            - iam:ListRolePolicies
+            - iam:ListPolicies
+            - iam:PassRole
+            - iam:CreateInstanceProfile
+            - iam:DeleteInstanceProfile
+            - iam:GetInstanceProfile
+            - iam:GetPolicyVersion
+            - iam:TagInstanceProfile
+            - iam:ListPolicyVersions
+            - iam:TagPolicy
+            - iam:UntagRole
+            - iam:GetPolicy
+            - iam:TagRole
+            - iam:AddRoleToInstanceProfile
+            - iam:AttachRolePolicy
+            - iam:CreatePolicy
+            - iam:CreatePolicyVersion
+            - iam:CreateRole
+            - iam:DeletePolicy
+            - iam:DeletePolicyVersion
+            - iam:DeleteRole
+            - iam:DeleteRolePolicy
+            - iam:DetachRolePolicy
+            - iam:PutRolePolicy
+            - iam:UpdateAssumeRolePolicy
+            - iam:UpdateRole
+            - iam:PassRole
+            - iam:UpdateRoleDescription
+            - iam:RemoveRoleFromInstanceProfile
+            effect: Allow
+            resources:
+            - '*'
+          - actions:
+            - eks:*
+            effect: Allow
+            resources:
+            - '*'
+          - actions:
+            - s3:*
+            effect: Allow
+            resources:
+            - arn:aws:s3:::<company>app-dev-infra
+            - arn:aws:s3:::<company>app-dev-infra/*
+          - actions:
+            - kms:*
+            effect: Allow
+            resources:
+            - arn:aws:kms:us-east-1:<2ndAccount#>:key/14749b8b-fcde-4161-a74f-dcb5b587f895
+            - arn:aws:kms:us-east-1:<2ndAccount#>:alias/pulumi
+      name: dev-tt
+    - assumeRoleArns:
+      - arn:aws:iam::<account#>:user/jonathan
+      inlinePolicies:
+        name: manage-pulumi
+        policy:
+          statements:
+          - actions:
+            - eks:*
+            effect: Allow
+            resources:
+            - '*'
+          - actions:
+            - s3:*
+            effect: Allow
+            resources:
+            - arn:aws:s3:::<company>app-dev-infra
+            - arn:aws:s3:::<company>app-dev-infra/*
+          - actions:
+            - kms:*
+            effect: Allow
+            resources:
+            - arn:aws:kms:us-east-1:<2ndAccount#>:key/14749b8b-fcde-4161-a74f-dcb5b587f895
+            - arn:aws:kms:us-east-1:<2ndAccount#>:alias/pulumi
+      name: dev-pulumi-admin
+    - arns:
+      - arn:aws:iam::aws:policy/ReadOnlyAccess
+      assumeRoleArns:
+      - arn:aws:iam::<account#>:user/jonathan
+      - arn:aws:iam::<account#>:user/zahra
+      - arn:aws:iam::<account#>:user/skyler
+      name: dev-read-only
+    - assumeRoleArns:
+      - arn:aws:iam::<account#>:user/jonathan
+      - arn:aws:iam::<account#>:user/zahra
+      - arn:aws:iam::<account#>:user/skyler
+      inlinePolicies:
+        name: ManagePulumi
+        policy:
+          statements:
+          - actions:
+            - s3:*
+            effect: Allow
+            resources:
+            - arn:aws:s3:::<company>app-dev-infra
+            - arn:aws:s3:::<company>app-dev-infra/*
+          - actions:
+            - kms:*
+            effect: Allow
+            resources:
+            - arn:aws:kms:us-east-1:<2ndAccount#>:key/14749b8b-fcde-4161-a74f-dcb5b587f895
+            - arn:aws:kms:us-east-1:<2ndAccount#>:alias/pulumi
+      name: pulumi-admin
+    - arns:
+      - arn:aws:iam::aws:policy/AmazonRedshiftFullAccess
+      - arn:aws:iam::aws:policy/AmazonSageMakerFullAccess
+      - arn:aws:iam::aws:policy/AmazonRedshiftQueryEditorV2FullAccess
+      - arn:aws:iam::aws:policy/AmazonAthenaFullAccess
+      - arn:aws:iam::aws:policy/SecretsManagerReadWrite
+      - arn:aws:iam::aws:policy/IAMFullAccess
+      assumeRoleArns:
+      - arn:aws:iam::<account#>:role/org-admin
+      - arn:aws:iam::<account#>:user/jonathan
+      - arn:aws:iam::<account#>:user/zahra
+      - arn:aws:iam::<account#>:user/skyler
+      assumeRoleService:
+      - redshift-serverless.amazonaws.com
+      - sagemaker.amazonaws.com
+      - redshift.amazonaws.com
+      inlinePolicies:
+        name: redshift-s3-access
+        policy:
+          statements:
+          - actions:
+            - s3:*
+            effect: Allow
+            resources:
+            - arn:aws:s3:::<company>-dev-redshift
+            - arn:aws:s3:::<company>-dev-redshift/*
+            - arn:aws:s3:::<company>-dev-ml-data-imports
+            - arn:aws:s3:::<company>-dev-ml-data-imports/*
+      name: machine-learning-admin
+    - arns:
+      - arn:aws:iam::aws:policy/AmazonRedshiftAllCommandsFullAccess
+      assumeRoleService:
+      - redshift-serverless.amazonaws.com
+      - sagemaker.amazonaws.com
+      - redshift.amazonaws.com
+      inlinePolicies:
+        name: s3-policy
+        policy:
+          statements:
+          - actions:
+            - s3:*
+            effect: Allow
+            resources:
+            - arn:aws:s3:::<company>-dev-redshift
+            - arn:aws:s3:::<company>-dev-redshift/*
+      name: redshift-admin
+    - assumeRoleService:
+      - vpc-flow-logs.amazonaws.com
+      - ec2.amazonaws.com
+      inlinePolicies:
+        name: flow-log-policy
+        policy:
+          statements:
+          - actions:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+            - logs:DescribeLogGroups
+            - logs:DescribeLogStreams
+            effect: Allow
+            resources:
+            - '*'
+      name: flow-logs-role
+    - assumeRoleArns:
+      - arn:aws:iam::<account#>:user/johnathan
+      - arn:aws:iam::<account#>:user/zahra
+      - arn:aws:iam::<account#>:user/skyler
+      - arn:aws:iam::<2ndAccount#>:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_eks-admin_bfebb49d40b575e2
+      inlinePolicies:
+        name: eks-admin-policy
+        policy:
+          statements:
+          - actions:
+            - eks:*
+            effect: Allow
+            resources:
+            - '*'
+      name: eks-admin
+    - arns:
+      - arn:aws:iam::aws:policy/AdministratorAccess
+      assumeRoleArns:
+      - arn:aws:iam::<account#>:user/johnathan
+      - arn:aws:iam::<account#>:user/zahra
+      - arn:aws:iam::<account#>:user/skyler
+      - arn:aws:iam::<account#>:role/org-admin
+      - arn:aws:iam::<2ndAccount#>:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_AWSAdministratorAccess_2f9ee9c4d85c742f
+      name: org-admin
+    - assumeRoleArns:
+      - arn:aws:iam::<2ndAccount#>:user/dev-ci
+      - arn:aws:iam::<2ndAccount#>:role/org-admin-role
+      - arn:aws:iam::<2ndAccount#>:role/dev-tt-role
+      - arn:aws:iam::<2ndAccount#>:role/deployer-role
+      inlinePolicies:
+        name: deployer-policy
+        policy:
+          statements:
+          - actions:
+            - eks:*
+            - kms:*
+            - s3:*
+            - ecr:*
+            - ec2:*
+            - lambda:*
+            - events:*
+            - cloudwatch:*
+            - iam:GetRole
+            - iam:GetRolePolicy
+            - iam:ListAttachedRolePolicies
+            - iam:ListInstanceProfilesForRole
+            - iam:ListRolePolicies
+            - iam:ListPolicies
+            - iam:PassRole
+            - iam:CreateInstanceProfile
+            - iam:DeleteInstanceProfile
+            - iam:GetInstanceProfile
+            - iam:GetPolicyVersion
+            - iam:TagInstanceProfile
+            - iam:ListPolicyVersions
+            - iam:TagPolicy
+            - iam:UntagRole
+            - iam:GetPolicy
+            - iam:TagRole
+            - iam:AddRoleToInstanceProfile
+            - iam:AttachRolePolicy
+            - iam:CreatePolicy
+            - iam:CreatePolicyVersion
+            - iam:CreateRole
+            - iam:DeletePolicy
+            - iam:DeletePolicyVersion
+            - iam:DeleteRole
+            - iam:DeleteRolePolicy
+            - iam:DetachRolePolicy
+            - iam:PutRolePolicy
+            - iam:UpdateAssumeRolePolicy
+            - iam:UpdateRole
+            - iam:PassRole
+            - iam:UpdateRoleDescription
+            - iam:RemoveRoleFromInstanceProfile
+            effect: Allow
+            resources:
+            - '*'
+      name: deployer
+    users:
+    - name: dev-ci
+      policy:
+        statements:
+        - actions:
+          - sts:AssumeRole
+          effect: Allow
+          resources:
+          - arn:aws:iam::<2ndAccount#>:role/deployer-role
+  stack:providers:
+    aws:
+    - defaultTags:
+        tags:
+          environment: sandbox
+      name: aws-us-east-1-provider
+      region: us-east-1
