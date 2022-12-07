@@ -43,5 +43,8 @@ config:
         type: public
   stack:providers:
     aws:
-    - name: aws-us-east-1-provider
+    - defaultTags:
+        tags:
+          environment: sandbox
+      name: aws-us-east-1-provider
       region: us-east-1

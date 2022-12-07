@@ -1,0 +1,19 @@
+encryptionsalt: v1:itJsl9JCy1I=:v1:ajExxvENfHnbsAvV:D2rLCotVtzKi3D6r17l+7b27Ovtd4w==
+config:
+  stack:data:
+  - cert-manager-1
+  - cert-manager-controller
+  - cert-manager-webhook
+  - cert-manager-ctl
+  - external-dns
+  - jira-agent
+  - auth
+  - api-server
+  - tray-agent
+  stack:providers:
+    aws:
+    - defaultTags:
+        tags:
+          environment: sandbox
+      name: aws-us-east-1-provider
+      region: us-east-1
