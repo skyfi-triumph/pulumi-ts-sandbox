@@ -8,8 +8,8 @@ import {
 } from "./types";
 import * as aws from "@pulumi/aws";
 import * as pulumi from "@pulumi/pulumi";
-// import { createIam } from "../iam";
-// import { createSecret } from "../../secretsmanager";
+import { createIam } from "../iam";
+import { createSecret } from "../../secretsmanager";
 
 export function createClusterParameterGroup(
   config: AuroraParameterGroup,
@@ -191,61 +191,61 @@ export async function createAuroraCluster(
     );
   }
 
-//   const iamOutput = createIam(
-//     {
-//       roles: [
-//         {
-//           name: fullClusterIdentifier,
-//           arns: ["arn:aws:iam::aws:policy/SecretsManagerReadWrite"],
-//           assumeRoleService: [
-//             "rds.amazonaws.com",
-//             `dms.${config.region}.amazonaws.com`,
-//           ],
-//         },
-//       ],
-//     },
-//     provider
-//   );
+  const iamOutput = createIam(
+    {
+      roles: [
+        {
+          name: fullClusterIdentifier,
+          arns: ["arn:aws:iam::aws:policy/SecretsManagerReadWrite"],
+          assumeRoleService: [
+            "rds.amazonaws.com",
+            `dms.${config.region}.amazonaws.com`,
+          ],
+        },
+      ],
+    },
+    provider
+  );
 
-//   auroraCluster.endpoint.apply((clusterEndpoint) => {
-//     auroraCluster.readerEndpoint.apply((clusterReaderEndpoint) => {
-//       auroraCluster.port.apply((clusterPort) => {
-//         if (iamOutput.roles) {
-//           if (cluster.secret.rds && cluster.secret.rds.create) {
-//             createSecret(
-//               {
-//                 rds: {
-//                   create: cluster.secret.rds.create,
-//                   name: fullClusterIdentifier,
-//                   username: cluster.masterUsername,
-//                   password: cluster.masterPassword,
-//                   engine: cluster.secret.rds.engine,
-//                   host: clusterEndpoint,
-//                   hostRo: clusterReaderEndpoint,
-//                   port: clusterPort,
-//                   dbname: cluster.databaseName as string,
-//                   dbClusterIdentifier: fullClusterIdentifier,
-//                   role: <string>(
-//                     (<unknown>iamOutput.roles[fullClusterIdentifier])
-//                   ),
-//                 },
-//               },
-//               provider
-//             ) as aws.secretsmanager.Secret;
-//           }
-//         }
-//       });
-//     });
-//   });
+  auroraCluster.endpoint.apply((clusterEndpoint) => {
+    auroraCluster.readerEndpoint.apply((clusterReaderEndpoint) => {
+      auroraCluster.port.apply((clusterPort) => {
+        if (iamOutput.roles) {
+          if (cluster.secret.rds && cluster.secret.rds.create) {
+            createSecret(
+              {
+                rds: {
+                  create: cluster.secret.rds.create,
+                  name: fullClusterIdentifier,
+                  username: cluster.masterUsername,
+                  password: cluster.masterPassword,
+                  engine: cluster.secret.rds.engine,
+                  host: clusterEndpoint,
+                  hostRo: clusterReaderEndpoint,
+                  port: clusterPort,
+                  dbname: cluster.databaseName as string,
+                  dbClusterIdentifier: fullClusterIdentifier,
+                  role: <string>(
+                    (<unknown>iamOutput.roles[fullClusterIdentifier])
+                  ),
+                },
+              },
+              provider
+            ) as aws.secretsmanager.Secret;
+          }
+        }
+      });
+    });
+  });
 
-//   rtnObj[fullClusterIdentifier] = Object.assign(
-//     {},
-//     rtnObj[cluster.clusterIdentifier],
-//     {
-//       read: auroraCluster.readerEndpoint,
-//       write: auroraCluster.endpoint,
-//     }
-//   );
+  rtnObj[fullClusterIdentifier] = Object.assign(
+    {},
+    rtnObj[cluster.clusterIdentifier],
+    {
+      read: auroraCluster.readerEndpoint,
+      write: auroraCluster.endpoint,
+    }
+  );
   return rtnObj;
 }
 

@@ -4,13 +4,13 @@ import { Secret } from "@pulumi/aws/secretsmanager";
 import { generateAwsProviders } from "./aws/utils";
 
 // aws
-import { AuroraConfig, createAuroraCluster } from "./rds";
+import { AuroraConfig, createAuroraCluster } from "./aws/rds";
 import { createVpc, createVpcRoutes } from "./aws/vpc";
-import { createRepository } from "./ecr";
+import { createRepository } from "./aws/ecr";
 import { createIam } from "./aws/iam";
-import { createS3Buckets, S3 } from "./s3";
-import { createSecret, JsonSecret } from "./secretsmanager";
-import { createTransitVpnGateway, TransitVpnConfig } from "./vpn";
+import { createS3Buckets, S3 } from "./aws/s3";
+import { createSecret, JsonSecret } from "./aws/secretsmanager";
+import { createTransitVpnGateway, TransitVpnConfig } from "./aws/vpn";
 
 // types
 import {
