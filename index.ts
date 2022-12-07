@@ -4,7 +4,7 @@ import { Provider, ProviderArgs, Region } from "@pulumi/aws";
 import { generateAwsProviders } from "./aws/utils";
 
 // aws
-import { AuroraConfig, createAuroraCluster } from "./rds";
+import { AuroraConfig, createAuroraCluster } from "./aws/rds";
 import { createVpc, createVpcRoutes } from "./aws/vpc";
 
 // types
